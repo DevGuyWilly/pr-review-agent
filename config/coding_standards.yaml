@@ -1,0 +1,110 @@
+# Coding Standards Configuration
+# 7 rules across 4 categories: Style & Formatting, Code Quality, Security, Best Practices
+
+rules:
+  # ── Style & Formatting
+  - id: STYLE_001
+    name: line_length
+    category: style_formatting
+    severity: warning
+    description: "Lines should not exceed the maximum character limit."
+    params:
+      max_length: 120
+    enabled: true
+
+  - id: STYLE_002
+    name: naming_conventions
+    category: style_formatting
+    severity: warning
+    description: >
+      Python identifiers should follow PEP 8 naming conventions:
+      snake_case for functions/variables, PascalCase for classes,
+      UPPER_SNAKE_CASE for constants.
+    params:
+      functions: snake_case
+      classes: PascalCase
+      constants: UPPER_SNAKE_CASE
+    enabled: true
+
+  # ── Code Quality
+  - id: QUALITY_001
+    name: function_complexity
+    category: code_quality
+    severity: error
+    description: >
+      Functions with high cyclomatic complexity should be refactored
+      into smaller, more focused functions.
+    params:
+      max_cyclomatic_complexity: 10
+      max_function_lines: 50
+    enabled: true
+
+  - id: QUALITY_002
+    name: unused_imports
+    category: code_quality
+    severity: warning
+    description: "Unused imports should be removed to keep code clean."
+    params: {}
+    enabled: true
+
+  # ── Security
+  - id: SECURITY_001
+    name: no_hardcoded_secrets
+    category: security
+    severity: critical
+    description: >
+      Sensitive values (API keys, passwords, tokens) must not be
+      hardcoded. Use environment variables or a secrets manager.
+    params:
+      patterns:
+        - "(?i)(password|passwd|pwd)\\s*=\\s*['\"][^'\"]{4,}['\"]"
+        - "(?i)(api_key|apikey|api_secret)\\s*=\\s*['\"][^'\"]{8,}['\"]"
+        - "(?i)(secret|token)\\s*=\\s*['\"][^'\"]{8,}['\"]"
+        - "(ghp_[a-zA-Z0-9]{36})"
+        - "(sk-[a-zA-Z0-9]{32,})"
+    enabled: true
+
+  - id: SECURITY_002
+    name: no_dangerous_functions
+    category: security
+    severity: critical
+    description: >
+      Avoid using eval(), exec(), and similar dynamic code execution
+      functions as they pose significant security risks.
+    params:
+      forbidden_functions:
+        - eval
+        - exec
+        - compile
+        - __import__
+    enabled: true
+
+  # ── Best Practices
+  - id: BEST_001
+    name: docstring_coverage
+    category: best_practices
+    severity: info
+    description: >
+      All public functions and classes should have docstrings
+      explaining their purpose, parameters, and return values.
+    params:
+      require_for:
+        - public_functions
+        - classes
+    enabled: true
+
+# Delegation thresholds for multi-agent handoff
+delegation:
+  max_violations_per_file: 3
+  min_complexity_for_refactor: 10
+  auto_refactor_severities:
+    - critical
+    - error
+  enabled: true
+
+# Output configuration
+output:
+  format: jsonl
+  log_directory: logs
+  include_confidence_scores: true
+  include_reasoning: true

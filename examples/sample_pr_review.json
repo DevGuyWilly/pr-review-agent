@@ -1,0 +1,494 @@
+{
+  "pr_metadata": {
+    "number": 5,
+    "title": "Add authentication service module",
+    "body": "",
+    "state": "open",
+    "author": "DevGuyWilly",
+    "base_branch": "main",
+    "head_branch": "feature/add-auth-service",
+    "head_sha": "beba709676322cc1f30f4b50cb896557dba3d351",
+    "created_at": "2026-02-18T18:40:49+00:00",
+    "updated_at": "2026-02-18T18:40:49+00:00",
+    "changed_files": 1,
+    "additions": 75,
+    "deletions": 0
+  },
+  "total_issues": 31,
+  "violations": [
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'authenticateUser' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 15,
+      "line_content": "def authenticateUser(username, password):",
+      "suggestion": "Rename to 'authenticate_user'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Class 'session_manager' does not follow PascalCase convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 24,
+      "line_content": "class session_manager:",
+      "suggestion": "Rename to 'SessionManager'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'CreateSession' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 29,
+      "line_content": "def CreateSession(self, userId, deviceId, ipAddress, userAgent, rememberMe, twoFactorCode):",
+      "suggestion": "Rename to 'create_session'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'LoadSession' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 46,
+      "line_content": "def LoadSession(self, data):",
+      "suggestion": "Rename to 'load_session'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'DestroySession' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 49,
+      "line_content": "def DestroySession(self, sessionId):",
+      "suggestion": "Rename to 'destroy_session'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'RunCleanup' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 52,
+      "line_content": "def RunCleanup(self, command):",
+      "suggestion": "Rename to 'run_cleanup'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'ExportSessions' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 55,
+      "line_content": "def ExportSessions(self, path):",
+      "suggestion": "Rename to 'export_sessions'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'hashPassword' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 61,
+      "line_content": "def hashPassword(pwd):",
+      "suggestion": "Rename to 'hash_password'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'validateEmail' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 65,
+      "line_content": "def validateEmail(email):",
+      "suggestion": "Rename to 'validate_email'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'unusedTokenGenerator' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 71,
+      "line_content": "def unusedTokenGenerator():",
+      "suggestion": "Rename to 'unused_token_generator'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "STYLE_002",
+      "rule_name": "naming_conventions",
+      "category": "style_formatting",
+      "severity": "warning",
+      "description": "Function 'anotherUnusedUtil' does not follow snake_case convention.",
+      "file_path": "app/auth_service.py",
+      "line_number": 74,
+      "line_content": "def anotherUnusedUtil(x, y, z):",
+      "suggestion": "Rename to 'another_unused_util'.",
+      "confidence": 0.9
+    },
+    {
+      "rule_id": "SECURITY_001",
+      "rule_name": "no_hardcoded_secrets",
+      "category": "security",
+      "severity": "critical",
+      "description": "Possible hardcoded secret detected.",
+      "file_path": "app/auth_service.py",
+      "line_number": 13,
+      "line_content": "API_KEY = \"sk-live-abc123def456ghi789jkl012\"",
+      "suggestion": "Use environment variables or a secrets manager instead.",
+      "confidence": 0.75
+    },
+    {
+      "rule_id": "SECURITY_001",
+      "rule_name": "no_hardcoded_secrets",
+      "category": "security",
+      "severity": "critical",
+      "description": "Possible hardcoded secret detected.",
+      "file_path": "app/auth_service.py",
+      "line_number": 16,
+      "line_content": "query = f\"SELECT * FROM users WHERE username='{username}' AND password='{password}'\"",
+      "suggestion": "Use environment variables or a secrets manager instead.",
+      "confidence": 0.75
+    },
+    {
+      "rule_id": "SECURITY_002",
+      "rule_name": "no_dangerous_functions",
+      "category": "security",
+      "severity": "critical",
+      "description": "Use of dangerous function 'eval()' detected.",
+      "file_path": "app/auth_service.py",
+      "line_number": 17,
+      "line_content": "result = eval(f\"db.execute('{query}')\")",
+      "suggestion": "Avoid 'eval()'. Use safer alternatives like ast.literal_eval() for eval().",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "SECURITY_002",
+      "rule_name": "no_dangerous_functions",
+      "category": "security",
+      "severity": "critical",
+      "description": "Use of dangerous function 'exec()' detected.",
+      "file_path": "app/auth_service.py",
+      "line_number": 50,
+      "line_content": "exec(f\"del self.sessions['{sessionId}']\")",
+      "suggestion": "Avoid 'exec()'. Use safer alternatives like ast.literal_eval() for eval().",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'authenticateUser' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 15,
+      "line_content": "def authenticateUser(username, password):",
+      "suggestion": "Add a docstring describing the purpose of 'authenticateUser'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Class 'session_manager' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 24,
+      "line_content": "class session_manager:",
+      "suggestion": "Add a docstring describing the purpose of 'session_manager'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'CreateSession' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 29,
+      "line_content": "def CreateSession(self, userId, deviceId, ipAddress, userAgent, rememberMe, twoFactorCode):",
+      "suggestion": "Add a docstring describing the purpose of 'CreateSession'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'LoadSession' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 46,
+      "line_content": "def LoadSession(self, data):",
+      "suggestion": "Add a docstring describing the purpose of 'LoadSession'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'DestroySession' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 49,
+      "line_content": "def DestroySession(self, sessionId):",
+      "suggestion": "Add a docstring describing the purpose of 'DestroySession'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'RunCleanup' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 52,
+      "line_content": "def RunCleanup(self, command):",
+      "suggestion": "Add a docstring describing the purpose of 'RunCleanup'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'ExportSessions' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 55,
+      "line_content": "def ExportSessions(self, path):",
+      "suggestion": "Add a docstring describing the purpose of 'ExportSessions'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'hashPassword' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 61,
+      "line_content": "def hashPassword(pwd):",
+      "suggestion": "Add a docstring describing the purpose of 'hashPassword'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'validateEmail' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 65,
+      "line_content": "def validateEmail(email):",
+      "suggestion": "Add a docstring describing the purpose of 'validateEmail'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'unusedTokenGenerator' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 71,
+      "line_content": "def unusedTokenGenerator():",
+      "suggestion": "Add a docstring describing the purpose of 'unusedTokenGenerator'.",
+      "confidence": 0.95
+    },
+    {
+      "rule_id": "BEST_001",
+      "rule_name": "docstring_coverage",
+      "category": "best_practices",
+      "severity": "info",
+      "description": "Function 'anotherUnusedUtil' is missing a docstring.",
+      "file_path": "app/auth_service.py",
+      "line_number": 74,
+      "line_content": "def anotherUnusedUtil(x, y, z):",
+      "suggestion": "Add a docstring describing the purpose of 'anotherUnusedUtil'.",
+      "confidence": 0.95
+    }
+  ],
+  "findings": [
+    {
+      "finding_type": "best_practice",
+      "severity": "warning",
+      "file_path": "app/auth_service.py",
+      "line_number": 25,
+      "line_content": "def __init__(self, cache={}):",
+      "description": "Function '__init__' uses a mutable default argument.",
+      "suggestion": "Use None as default and initialise inside the function body.",
+      "confidence": 0.95,
+      "metadata": {
+        "function_name": "__init__"
+      }
+    },
+    {
+      "finding_type": "complexity",
+      "severity": "warning",
+      "file_path": "app/auth_service.py",
+      "line_number": 29,
+      "line_content": "def CreateSession(self, userId, deviceId, ipAddress, userAgent, rememberMe, twoFactorCode):",
+      "description": "Function 'CreateSession' has 6 parameters (recommended max: 5).",
+      "suggestion": "Consider grouping related parameters into a dataclass or dict.",
+      "confidence": 0.8,
+      "metadata": {
+        "param_count": 6,
+        "function_name": "CreateSession"
+      }
+    },
+    {
+      "finding_type": "complexity",
+      "severity": "warning",
+      "file_path": "app/auth_service.py",
+      "line_number": 31,
+      "line_content": "if userId:",
+      "description": "Code is nested 4 levels deep. Consider refactoring.",
+      "suggestion": "Extract inner logic into separate helper functions.",
+      "confidence": 0.85,
+      "metadata": {
+        "nesting_depth": 4
+      }
+    },
+    {
+      "finding_type": "best_practice",
+      "severity": "warning",
+      "file_path": "app/auth_service.py",
+      "line_number": 43,
+      "line_content": "except:",
+      "description": "Bare 'except:' clause catches all exceptions including SystemExit and KeyboardInterrupt.",
+      "suggestion": "Catch specific exceptions, e.g. 'except ValueError:' or 'except Exception:'.",
+      "confidence": 0.95,
+      "metadata": {}
+    },
+    {
+      "finding_type": "best_practice",
+      "severity": "info",
+      "file_path": "app/auth_service.py",
+      "line_number": 20,
+      "line_content": "print(f\"User {username} authenticated with token {token}\")",
+      "description": "Use of print() detected; consider using the logging module instead.",
+      "suggestion": "Replace with logging.info(), logging.debug(), etc.",
+      "confidence": 0.7,
+      "metadata": {}
+    }
+  ],
+  "llm_comments": [],
+  "delegation_actions": [
+    {
+      "file": "app/db_manager.py",
+      "action": "File has 40 violations (threshold: 3).",
+      "status": "completed",
+      "actions_count": 15
+    },
+    {
+      "file": "app/auth_service.py",
+      "action": "File has 31 violations (threshold: 3).",
+      "status": "completed",
+      "actions_count": 10
+    }
+  ],
+  "coordinator_report": {
+    "total_handoffs": 2,
+    "completed": 2,
+    "failed": 0,
+    "handoffs": [
+      {
+        "handoff_id": "handoff-0001",
+        "file_path": "app/db_manager.py",
+        "reason": "File has 40 violations (threshold: 3).",
+        "status": "completed",
+        "violation_count": 40,
+        "action_count": 15,
+        "commit_shas": [
+          "d4b03b25cd20916c8578474583d87730657e9537"
+        ],
+        "duration_seconds": 373.50088024139404,
+        "error": ""
+      },
+      {
+        "handoff_id": "handoff-0002",
+        "file_path": "app/auth_service.py",
+        "reason": "File has 31 violations (threshold: 3).",
+        "status": "completed",
+        "violation_count": 31,
+        "action_count": 10,
+        "commit_shas": [],
+        "duration_seconds": 162.23451709747314,
+        "error": ""
+      }
+    ],
+    "message_log": [
+      {
+        "sender": "coordinator",
+        "receiver": "refactorer",
+        "message_type": "delegation_request",
+        "payload": {
+          "handoff_id": "handoff-0001",
+          "file_path": "app/db_manager.py",
+          "violation_count": 40,
+          "complexity_score": 21,
+          "reason": "File has 40 violations (threshold: 3)."
+        },
+        "timestamp": 1771437349.792922
+      },
+      {
+        "sender": "refactorer",
+        "receiver": "coordinator",
+        "message_type": "delegation_result",
+        "payload": {
+          "handoff_id": "handoff-0001",
+          "actions_applied": 15,
+          "actions_failed": 0
+        },
+        "timestamp": 1771437723.293879
+      },
+      {
+        "sender": "coordinator",
+        "receiver": "refactorer",
+        "message_type": "delegation_request",
+        "payload": {
+          "handoff_id": "handoff-0002",
+          "file_path": "app/auth_service.py",
+          "violation_count": 31,
+          "complexity_score": 20,
+          "reason": "File has 31 violations (threshold: 3)."
+        },
+        "timestamp": 1771440072.7426538
+      },
+      {
+        "sender": "refactorer",
+        "receiver": "coordinator",
+        "message_type": "delegation_result",
+        "payload": {
+          "handoff_id": "handoff-0002",
+          "actions_applied": 10,
+          "actions_failed": 0
+        },
+        "timestamp": 1771440234.97458
+      }
+    ]
+  },
+  "timestamp": "2026-02-18T18:43:54.976776+00:00",
+  "elapsed_seconds": 193.39
+}
