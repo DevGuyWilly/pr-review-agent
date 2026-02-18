@@ -23,6 +23,7 @@ class GitHubClient:
     """Wrapper around PyGithub for PR-focused operations."""
 
     def __init__(self, token: str, max_retries: int = 3):
+        """Initialise the client with a GitHub PAT and retry configuration."""
         self.github = Github(token, retry=max_retries)
         self.max_retries = max_retries
         logger.info("GitHub client initialised successfully.")

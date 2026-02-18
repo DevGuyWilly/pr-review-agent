@@ -27,6 +27,7 @@ class LLMReviewComment:
     reasoning: str = ""
 
     def to_dict(self) -> dict:
+        """Serialise the comment to a plain dictionary for JSON output."""
         return {
             "file_path": self.file_path,
             "line_number": self.line_number,
@@ -96,12 +97,14 @@ class LLMReviewer:
         api_key: Optional[str] = None,
         model: Optional[str] = None,
     ):
+        """Initialise the reviewer with an LLM provider and model."""
         self.provider = provider or os.getenv("LLM_PROVIDER", "ollama")
         self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
         self.model = model or self._default_model()
         logger.info("LLM Reviewer initialised: provider=%s, model=%s", self.provider, self.model)
 
     def _default_model(self) -> str:
+        """Return the default model name for the configured provider."""
         defaults = {
             "ollama": "codellama",
             "openai": "gpt-4o-mini",
@@ -159,6 +162,7 @@ class LLMReviewer:
     def _build_review_prompt(
         self, file_path: str, source_code: str, diff_content: str, context: Optional[str]
     ) -> str:
+        """Assemble the user prompt for a code review request."""
         prompt_parts = [
             f"## File: {file_path}\n",
             "### Diff:\n```diff\n" + diff_content + "\n```\n",
@@ -171,6 +175,7 @@ class LLMReviewer:
     def _build_refactor_prompt(
         self, file_path: str, source_code: str, issues: list[dict]
     ) -> str:
+        """Assemble the user prompt for a refactoring request."""
         issues_text = json.dumps(issues, indent=2)
         return (
             f"## File: {file_path}\n\n"
@@ -193,6 +198,7 @@ class LLMReviewer:
             raise ValueError(f"Unknown LLM provider: {self.provider}")
 
     def _call_openai(self, system_prompt: str, user_prompt: str) -> str:
+        """Send a chat completion request to the OpenAI API."""
         from openai import OpenAI
 
         client = OpenAI(api_key=self.api_key)
@@ -209,6 +215,7 @@ class LLMReviewer:
         return response.choices[0].message.content
 
     def _call_ollama(self, system_prompt: str, user_prompt: str) -> str:
+        """Send a chat request to a local Ollama instance."""
         import requests
 
         url = os.getenv("OLLAMA_URL", "http://localhost:11434")
@@ -229,6 +236,7 @@ class LLMReviewer:
         return response.json()["message"]["content"]
 
     def _call_anthropic(self, system_prompt: str, user_prompt: str) -> str:
+        """Send a messages request to the Anthropic API."""
         import requests
 
         api_key = os.getenv("ANTHROPIC_API_KEY", self.api_key)

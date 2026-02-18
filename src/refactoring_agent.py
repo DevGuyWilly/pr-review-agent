@@ -28,6 +28,7 @@ class RefactorAction:
     error: str = ""
 
     def to_dict(self) -> dict:
+        """Serialise the action to a plain dictionary for JSON output."""
         return {
             "action_type": self.action_type,
             "file_path": self.file_path,
@@ -48,6 +49,7 @@ class DelegationRequest:
     priority: str = "normal"  # low, normal, high, critical
 
     def to_dict(self) -> dict:
+        """Serialise the request to a plain dictionary for logging."""
         return {
             "file_path": self.file_path,
             "violation_count": len(self.violations),
@@ -63,6 +65,7 @@ class RefactoringAgent:
     """
 
     def __init__(self, github_client=None, llm_reviewer=None):
+        """Initialise with optional GitHub client (for commits) and LLM reviewer."""
         self.github_client = github_client
         self.llm_reviewer = llm_reviewer
         self.actions_taken: list[RefactorAction] = []
@@ -356,6 +359,7 @@ class RefactoringAgent:
 
     @staticmethod
     def _to_snake_case(name: str) -> str:
+        """Convert a CamelCase or mixedCase name to snake_case."""
         s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1_\2", name)
         s = re.sub(r"([a-z\d])([A-Z])", r"\1_\2", s)
         return s.lower()

@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModificationType(str, Enum):
+    """How a file was changed in the pull request."""
     ADDED = "added"
     MODIFIED = "modified"
     DELETED = "deleted"
@@ -24,6 +25,7 @@ class ModificationType(str, Enum):
 
 
 class LineChangeType(str, Enum):
+    """Type of change for an individual diff line."""
     ADDITION = "addition"
     DELETION = "deletion"
     CONTEXT = "context"
@@ -51,10 +53,12 @@ class DiffHunk:
 
     @property
     def added_lines(self) -> list[ChangedLine]:
+        """Return only the added lines in this hunk."""
         return [l for l in self.lines if l.change_type == LineChangeType.ADDITION]
 
     @property
     def deleted_lines(self) -> list[ChangedLine]:
+        """Return only the deleted lines in this hunk."""
         return [l for l in self.lines if l.change_type == LineChangeType.DELETION]
 
 
@@ -71,6 +75,7 @@ class FileDiff:
 
     @property
     def total_changes(self) -> int:
+        """Total number of added and deleted lines."""
         return self.additions + self.deletions
 
     @property

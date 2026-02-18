@@ -57,6 +57,7 @@ _review_agent: Optional[ReviewAgent] = None
 
 
 def get_review_agent() -> ReviewAgent:
+    """Return (and lazily initialise) the singleton ReviewAgent instance."""
     global _review_agent
     if _review_agent is None:
         _review_agent = ReviewAgent()
@@ -230,6 +231,7 @@ async def manual_review(
 # ── Entry Point ───────────────────────────────────────────────────────────
 
 def main():
+    """Start the FastAPI webhook server with uvicorn."""
     import uvicorn
 
     setup_logging(os.getenv("LOG_LEVEL", "INFO"))

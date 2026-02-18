@@ -43,6 +43,7 @@ LOG_DIR.mkdir(exist_ok=True)
 
 
 def setup_logging(level: str = "INFO") -> None:
+    """Configure root logger with console and file handlers."""
     log_level = getattr(logging, level.upper(), logging.INFO)
     logging.basicConfig(
         level=log_level,
@@ -153,6 +154,7 @@ class ReviewAgent:
         config_path: Optional[str] = None,
         llm_provider: Optional[str] = None,
     ):
+        """Initialise the review agent with GitHub credentials, rules, and analysers."""
         self.github_token = github_token or os.getenv("GITHUB_TOKEN", "")
         self.rules_engine = RulesEngine(config_path)
         self.code_analyzer = CodeAnalyzer()
@@ -569,6 +571,7 @@ class ReviewAgent:
 # ── CLI Entry Point ───────────────────────────────────────────────────────
 
 def main():
+    """CLI entry point — parse arguments and run a review or start the server."""
     parser = argparse.ArgumentParser(
         description="Automated Code Review Agent",
         formatter_class=argparse.RawDescriptionHelpFormatter,

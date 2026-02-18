@@ -33,6 +33,7 @@ class Violation:
     confidence: float = 1.0
 
     def to_dict(self) -> dict:
+        """Serialise the violation to a plain dictionary for JSON output."""
         return {
             "rule_id": self.rule_id,
             "rule_name": self.rule_name,
@@ -63,6 +64,7 @@ class RulesEngine:
     """Load and apply coding standard rules against source code."""
 
     def __init__(self, config_path: Optional[str] = None):
+        """Initialise the engine, loading rules from the YAML config file."""
         self.config_path = Path(config_path) if config_path else DEFAULT_CONFIG_PATH
         self.rules: list[RuleDefinition] = []
         self.delegation_config: dict = {}
@@ -142,6 +144,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """STYLE_001: Flag lines that exceed the configured max length."""
         max_len = rule.params.get("max_length", 120)
         violations = []
         for i, line in enumerate(lines, 1):
@@ -166,6 +169,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """STYLE_002: Enforce PEP 8 naming — snake_case functions, PascalCase classes."""
         violations = []
         func_pattern = re.compile(r"^\s*def\s+([a-zA-Z_]\w*)\s*\(")
         class_pattern = re.compile(r"^\s*class\s+([a-zA-Z_]\w*)")
@@ -292,6 +296,7 @@ class RulesEngine:
         line_content, complexity, line_count, max_complexity, max_lines,
         changed_lines,
     ):
+        """Emit violations if a function exceeds complexity or length limits."""
         if changed_lines and func_start not in changed_lines:
             return
         if complexity > max_complexity:
@@ -331,6 +336,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """QUALITY_002: Detect import statements whose names are never used."""
         violations = []
         import_pattern = re.compile(
             r"^\s*(?:from\s+\S+\s+)?import\s+(.+)$"
@@ -381,6 +387,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """SECURITY_001: Flag strings that match known secret patterns."""
         violations = []
         patterns = rule.params.get("patterns", [])
 
@@ -414,6 +421,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """SECURITY_002: Flag calls to eval(), exec(), and other forbidden functions."""
         violations = []
         forbidden = rule.params.get("forbidden_functions", [])
 
@@ -447,6 +455,7 @@ class RulesEngine:
         self, rule: RuleDefinition, file_path: str,
         lines: list[str], changed_lines: Optional[list[int]]
     ) -> list[Violation]:
+        """BEST_001: Flag public functions and classes that lack a docstring."""
         violations = []
         func_pattern = re.compile(r"^(\s*)def\s+(\w+)\s*\(")
         class_pattern = re.compile(r"^(\s*)class\s+(\w+)")
@@ -512,10 +521,12 @@ class RulesEngine:
 # ── Helpers ───────────────────────────────────────────────────────────────
 
 def _to_snake_case(name: str) -> str:
+    """Convert a CamelCase or mixedCase name to snake_case."""
     s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1_\2", name)
     s = re.sub(r"([a-z\d])([A-Z])", r"\1_\2", s)
     return s.lower()
 
 
 def _to_pascal_case(name: str) -> str:
+    """Convert a snake_case or space-separated name to PascalCase."""
     return "".join(word.capitalize() for word in re.split(r"[_\s]+", name))

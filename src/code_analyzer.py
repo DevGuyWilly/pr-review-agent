@@ -28,6 +28,7 @@ class AnalysisFinding:
     metadata: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
+        """Serialise the finding to a plain dictionary for JSON output."""
         return {
             "finding_type": self.finding_type,
             "severity": self.severity,
@@ -86,6 +87,7 @@ class CodeAnalyzer:
         source_code: str,
         changed_lines: Optional[list[int]],
     ) -> list[AnalysisFinding]:
+        """Walk the AST to detect structural issues (nesting, bare except, mutable defaults, etc.)."""
         findings = []
         lines = source_code.split("\n")
 
@@ -208,6 +210,7 @@ class CodeAnalyzer:
         source_code: str,
         changed_lines: Optional[list[int]],
     ) -> list[AnalysisFinding]:
+        """Regex-based checks for print(), TODO/FIXME markers, and broad type: ignore."""
         findings = []
         lines = source_code.split("\n")
 

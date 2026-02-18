@@ -19,12 +19,14 @@ logger = logging.getLogger(__name__)
 
 
 class AgentRole(str, Enum):
+    """Roles that agents can assume in the multi-agent system."""
     REVIEWER = "reviewer"
     REFACTORER = "refactorer"
     COORDINATOR = "coordinator"
 
 
 class HandoffStatus(str, Enum):
+    """Lifecycle states for a delegation handoff."""
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -42,6 +44,7 @@ class AgentMessage:
     timestamp: float = field(default_factory=time.time)
 
     def to_dict(self) -> dict:
+        """Serialise the message to a plain dictionary for logging."""
         return {
             "sender": self.sender.value,
             "receiver": self.receiver.value,
@@ -66,6 +69,7 @@ class HandoffRecord:
     error: str = ""
 
     def to_dict(self) -> dict:
+        """Serialise the handoff record for reporting and audit trails."""
         return {
             "handoff_id": self.handoff_id,
             "file_path": self.file_path,
@@ -92,6 +96,7 @@ class AgentCoordinator:
         refactoring_agent: RefactoringAgent,
         delegation_config: Optional[dict] = None,
     ):
+        """Initialise the coordinator with a refactoring agent and config."""
         self.refactoring_agent = refactoring_agent
         self.delegation_config = delegation_config or {}
         self.message_log: list[AgentMessage] = []
@@ -299,6 +304,7 @@ class AgentCoordinator:
         )
 
     def _get_handoff(self, handoff_id: str) -> Optional[HandoffRecord]:
+        """Look up a handoff record by its unique ID."""
         for h in self.handoffs:
             if h.handoff_id == handoff_id:
                 return h
